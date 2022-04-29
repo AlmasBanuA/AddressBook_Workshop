@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * In Controller class we write the API's here
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class AddressBookController {
 
     /**
-     * Autowired AddressBookService so we can inject its dependency here
+     * @Autowired annotation act as a dependency injection we can inject object of another class
      */
     @Autowired
     IAddressBookService service;
@@ -30,9 +30,10 @@ public class AddressBookController {
      * @return- welcome msg
      */
     @GetMapping("")
-    public String welcomeUser() {
-        return "Welcome to address book app development";
+    public String getMessage() {
+        return "Welcome to SpringBoot AddressBook Application";
     }
+
     /**
      * - Ability to get all address book data by findAll() method
      * @return :- showing all data
@@ -40,19 +41,19 @@ public class AddressBookController {
     @GetMapping("/get")
     public ResponseEntity<String> getAllData() {
         List<AddressBook> listOfContacts = service.getListOfAddresses();
-        ResponseDTO response = new ResponseDTO("Address book :", listOfContacts);
+        ResponseDTO response = new ResponseDTO("Addresbook :", listOfContacts);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /**
-     * Create api call to save data to repository
-     * @param addressBookDTO - person all data
+     * Create api call to save data to database
+     * @param addressBookDTO - all data of a person
      * @return- accepts the address book data in JSON format and stores it in DB
      */
     @PostMapping("/post")
-    public ResponseEntity<ResponseDTO> postData(@RequestBody AddressBookDTO addressBookDTO) {
+    public ResponseEntity<ResponseDTO> postData(@RequestBody @Valid AddressBookDTO addressBookDTO) {
         AddressBook newContact = service.saveAddress(addressBookDTO);
-        ResponseDTO response = new ResponseDTO("New Contact Added in Address book : ", newContact);
+        ResponseDTO response = new ResponseDTO("New Contact Added in Addressbook : ", newContact);
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
     }
 
@@ -62,10 +63,9 @@ public class AddressBookController {
      * @return - get person information with same Id in JSON format
      */
     @GetMapping("/get/{id}")
-    public ResponseEntity<AddressBook> getDataById(@PathVariable Integer id) {
-        Optional<AddressBook> addressBook = service.getDataById(id);
-        ResponseDTO dto = new ResponseDTO("Data",addressBook);
-        return new ResponseEntity(dto, HttpStatus.OK);
+    public ResponseEntity<AddressBook> getAddressById(@PathVariable Integer id) {
+        ResponseDTO response = new ResponseDTO("Addressbook of given id: ", service.getAddressbyId(id));
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /**
@@ -75,9 +75,9 @@ public class AddressBookController {
      * @return - accepts the address book data in JSON format and updates the address book having same id from database
      */
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseDTO> updateById(@PathVariable Integer id, @RequestBody AddressBookDTO addressBookDTO) {
+    public ResponseEntity<ResponseDTO> updateById(@PathVariable Integer id, @RequestBody @Valid AddressBookDTO addressBookDTO) {
         AddressBook newContact = service.updateDateById(id, addressBookDTO);
-        ResponseDTO response = new ResponseDTO("Addressbook updated : ", newContact);
+        ResponseDTO response = new ResponseDTO("Address-book updated : ", newContact);
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
     }
 
@@ -89,6 +89,6 @@ public class AddressBookController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteDataById(@PathVariable Integer id) {
         service.deleteContact(id);
-        return new ResponseEntity<String>("Contact deleted succesfully", HttpStatus.OK);
+        return new ResponseEntity<String>("Contact deleted successfully", HttpStatus.OK);
     }
 }

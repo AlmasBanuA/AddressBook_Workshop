@@ -70,4 +70,9 @@ public class AddressBookService implements IAddressBookService {
         repository.deleteById(id);
     }
 
+    @Override
+    public Object getAddressbyId(Integer id) {
+        return null;
+    }
+
 }

@@ -9,19 +9,17 @@ import java.util.Optional;
 /**
  * Created IAddressBookService interface to achieve abstraction
  */
-/**
- * Created IAddressBookService interface to achieve abstraction
- */
-public interface IAddressBookService {
 
-    public AddressBook saveAddress(AddressBookDTO addressBookDTO);
+ // Created IAddressBookService interface to achieve abstraction
+ public interface IAddressBookService {
 
-    public List<AddressBook> getListOfAddresses();
+ public AddressBook saveAddress(AddressBookDTO addressBookDTO);
 
-    public Optional<AddressBook> getDataById(Integer id);
+ public List<AddressBook> getListOfAddresses();
 
-    public AddressBook updateDateById(Integer id, AddressBookDTO addressBookDTO);
+ public AddressBook updateDateById(Integer id, AddressBookDTO addressBookDTO);
 
-    public void deleteContact(Integer id);
+ public void deleteContact(Integer id);
 
+ Object getAddressbyId(Integer id);
 }
