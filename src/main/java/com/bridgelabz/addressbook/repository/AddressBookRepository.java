@@ -1,7 +1,7 @@
 package com.bridgelabz.addressbook.repository;
 
-import com.bridgelabz.addressbook.model.AddressBook;
+import com.bridgelabz.addressbook.model.AddressBookData;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AddressBookRepository extends JpaRepository<AddressBook, Integer> {
+public interface AddressBookRepository extends JpaRepository<AddressBookData, Integer> {
 }

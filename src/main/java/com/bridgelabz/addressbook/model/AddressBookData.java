@@ -11,7 +11,7 @@ import javax.persistence.Id;
 //Created Model class AddressBook with different fields
 @Entity
 @Data
-public class AddressBook {
+public class AddressBookData {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -23,11 +23,12 @@ public class AddressBook {
     private String state;
     private Integer zip;
 
-    public AddressBook() {
+    public AddressBookData() {
+
         super();
     }
 
-    public AddressBook(AddressBookDTO addressBookDTO) {
+    public AddressBookData(AddressBookDTO addressBookDTO) {
         this.firstName=addressBookDTO.getFirstName();
         this.lastName=addressBookDTO.getLastName();
         this.email=addressBookDTO.getEmail();
@@ -36,7 +37,7 @@ public class AddressBook {
         this.state=addressBookDTO.getState();
         this.zip=addressBookDTO.getZip();
     }
-    public AddressBook(Integer id,AddressBookDTO addressBookDTO) {
+    public AddressBookData(Integer id, AddressBookDTO addressBookDTO) {
         this.id = id;
         this.firstName=addressBookDTO.getFirstName();
         this.lastName=addressBookDTO.getLastName();
