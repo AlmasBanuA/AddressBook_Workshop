@@ -84,7 +84,7 @@ public class AddressBookService implements IAddressBookService {
         }
         else {
             addressBookRepository.deleteById(id);
-            sender.sendEmail("abhishekrajawat101@gmail.com", "Test Email", "Deleted SuccessFully, hii: "
+            sender.sendEmail("almasbanu7866@gmail.com", "Test Email", "Deleted SuccessFully, hii: "
                     +addressBook.get()+"Please Click here to get data-> "
                     +"http://localhost:8080/addressBook/retrieve/"+token);
         }
