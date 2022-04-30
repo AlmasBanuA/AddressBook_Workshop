@@ -40,7 +40,7 @@ public class AddressBookService implements IAddressBookService {
         String token = tokenUtility.createToken(newAddress.getId());
         sender.sendEmail(newAddress.getEmail(), "Test Email", "Registered SuccessFully, Almas Hello: "
                 +newAddress.getFirstName()+"Please Click here to get data-> "
-                +"http://localhost:8080/addressBook/retrieve/"+token);
+                +"http://localhost:8080/addressBook/get/"+token);
         return token;
     }
 
@@ -64,7 +64,7 @@ public class AddressBookService implements IAddressBookService {
         addressBookRepository.save(newBook);
         sender.sendEmail(newBook.getEmail(), "Test Email", "Updated SuccessFully, hii: "
                 +newBook.getFirstName()+"Please Click here to get data of updated id-> "
-                +"http://localhost:8080/addressBook/retrieve/"+token);
+                +"http://localhost:8080/addressBook/get/"+token);
         return newBook;
     }
 
@@ -85,18 +85,16 @@ public class AddressBookService implements IAddressBookService {
         else {
             addressBookRepository.deleteById(id);
             sender.sendEmail("almasbanu7866@gmail.com", "Test Email", "Deleted SuccessFully, hii: "
-                    +addressBook.get()+"Please Click here to get data-> "
-                    +"http://localhost:8080/addressBook/retrieve/"+token);
+                    +addressBook.get()+" Data deleted successfully plz check"
+                    );
         }
-        return null;
+        throw new AddressBookException("Deleted Token Successfully");
     }
     /**
      * getAll AddressBook list by token
      * @return list of contact information from DB by validating token first
      * @token :-represent id
      */
-
-
     public List<AddressBookData> getAddressBookDataByToken(String token)
     {
         int id=tokenUtility.decodeToken(token);
@@ -109,7 +107,9 @@ public class AddressBookService implements IAddressBookService {
             return listAddressBook;
         }else {
             System.out.println("Exception ...Token not found!");
-            return null;	}
+            throw new AddressBookException("Exception Token Not found");
+
+        }
     }
 
 
@@ -127,9 +127,9 @@ public class AddressBookService implements IAddressBookService {
             throw new AddressBookException("Address Book Details not found for that particular id");
         }
         else {
-            sender.sendEmail("almasbanu7866@gmail.com", "Test Email", "Deleted SuccessFully, hii: "
+            sender.sendEmail("almasbanu7866@gmail.com", "Test Email", "Get Data successfullt, hii: "
                     +newAddressBook.get().getEmail()+"Please Click here to get data-> "
-                    +"http://localhost:8080/addressBook/retrieve/"+token);
+                    +"http://localhost:8080/addressBook/get/"+token);
 
             return newAddressBook.get();
         }
