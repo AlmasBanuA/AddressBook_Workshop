@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/addressbook")
+@RequestMapping("/addressBook")
 public class AddressBookController {
 
 
@@ -28,29 +28,30 @@ public class AddressBookController {
 
     /**
      * create record
-     * @apiNote accepts the  data in JSON format and stores it in DB
+     *
      * @param addressBookDTO - represents object of AddressBookDTO class
      * @return accepted address information in JSON format
+     * @apiNote accepts the  data in JSON format and stores it in DB
      */
     @PostMapping(path = "/create")
     public ResponseEntity<String> addAddressBookData(@Valid @RequestBody AddressBookDTO addressBookDTO) {
         String newContact = addressBookService.createAddressBookData(addressBookDTO);
         ResponseDTO respDTO = new ResponseDTO("New Contact Added in AddressBook ", newContact);
-        return new ResponseEntity (respDTO, HttpStatus.CREATED);
+        return new ResponseEntity(respDTO, HttpStatus.CREATED);
     }
 
 
     /**
-     *get all data by using token
+     * get all data by using token
+     *
      * @param token:-generated for id
      * @return fields with Http status
      */
     @GetMapping(value = "/retrieve/{token}")
-    public ResponseEntity<ResponseDTO> getAddressBookDataById(@PathVariable String token)
-    {
+    public ResponseEntity<ResponseDTO> getAddressBookDataById(@PathVariable String token) {
         List<AddressBookData> listOfContacts = addressBookService.getAddressBookDataByToken(token);
-        ResponseDTO dto = new ResponseDTO("Data retrieved successfully (:",listOfContacts);
-        return new ResponseEntity(dto,HttpStatus.OK);
+        ResponseDTO dto = new ResponseDTO("Data retrieved successfully (:", listOfContacts);
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
 
 
@@ -61,38 +62,60 @@ public class AddressBookController {
     @GetMapping("/get/{token}")
     public ResponseEntity<String> getRecordById(@PathVariable String token) throws AddressBookException {
         AddressBookData newAddressBook = addressBookService.getRecordByToken(token);
-        ResponseDTO dto = new ResponseDTO("Address Book Record for particular id retrieved successfully",newAddressBook);
-        return new ResponseEntity(dto,HttpStatus.OK);
+        ResponseDTO dto = new ResponseDTO("Address Book Record for particular id retrieved successfully", newAddressBook);
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
 
 
     /**
      * update  record data by token
-     * @apiNote accepts the address book data in JSON format and updates the address having same Id from database
-     * @param token - represents addressBook id
+     *
+     * @param token          - represents addressBook id
      * @param addressBookDTO - represents object of AddressBookDto class
-     * @return	updated address information in JSON format
+     * @apiNote accepts the address book data in JSON format and updates the address having same Id from database
+     * @return updated address information in JSON format
      */
 
 
     @PutMapping("/update/{token}")
-    public ResponseEntity<String> updateRecordById(@PathVariable String token,@Valid @RequestBody AddressBookDTO addressBookDTO){
-        AddressBookData entity = addressBookService.updateRecordByToken(token,addressBookDTO);
-        ResponseDTO dto = new ResponseDTO("Address Book Record updated successfully",entity);
-        return new ResponseEntity(dto,HttpStatus.ACCEPTED);
+    public ResponseEntity<String> updateRecordById(@PathVariable String token, @Valid @RequestBody AddressBookDTO addressBookDTO) {
+        AddressBookData entity = addressBookService.updateRecordByToken(token, addressBookDTO);
+        ResponseDTO dto = new ResponseDTO("Address Book Record updated successfully", entity);
+        return new ResponseEntity(dto, HttpStatus.ACCEPTED);
     }
 
     /**
      * delete records from database using token
-     * @apiNote accepts the Id and deletes the data of that specific from DB
+     *
      * @return Id and Acknowledgment message
+     * @apiNote accepts the Id and deletes the data of that specific from DB
      */
 
 
     @DeleteMapping("/delete/{token}")
-    public ResponseEntity<String> deleteRecordById(@PathVariable String token){
-        ResponseDTO dto = new ResponseDTO("Address Book Record deleted successfully",addressBookService.deleteRecordByToken(token));
-        return new ResponseEntity(dto,HttpStatus.OK);
+    public ResponseEntity<String> deleteRecordById(@PathVariable String token) {
+        ResponseDTO dto = new ResponseDTO("Address Book Record deleted successfully", addressBookService.deleteRecordByToken(token));
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
